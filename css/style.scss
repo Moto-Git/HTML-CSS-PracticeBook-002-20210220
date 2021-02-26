@@ -1,0 +1,660 @@
+// $cPrimary: #ff953a;
+// $cDarkGray: #222222;
+// $cMiddleGray: #414141;
+// $cGray: #888888;
+// $cWhite: #ffffff;
+
+// 変数
+:root {
+  // 色
+  --primary: #ff953a;
+  --darkgray: #222;
+  --midgray: #414141;
+  --gray: #888;
+  --white: #fff;
+}
+
+// view size
+:root {
+  --side: 6vw;
+}
+
+// サイズの基準 1rem = 100px
+:root {
+  font-size: 100px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    // 1366px * 7.32 = 100px
+    font-size: 7.32vw;
+  }
+}
+
+
+
+// テキストの基本設定
+
+body {
+  color: let(--darkgray);
+  font-size: 0.16rem;
+  font-family: sans-serif;
+  line-height: 1.8;
+}
+
+// Reset & Normalize & Sanitize CSS
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+
+
+// Hero
+.hero {
+  background-image: url(../img/cafe.jpg);
+  background-position: center;
+  background-size: cover;
+  background-color: var(--gray);
+
+  // side by side
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+html,
+body,
+.hero {
+  height: 100%;
+}
+
+body {
+  overflow-y: scroll;
+}
+
+@media (min-width:768px) {
+  .hero {
+    justify-content: flex-end;
+
+    & h1 {
+      width: 50%;
+      text-align: center;
+    }
+  }
+
+}
+
+
+// hero arrow
+.hero {
+  position: relative;
+
+  &::after {
+    content: url(../img/arrow.svg);
+    display: block;
+    width: 0.16rem;
+    padding: 0.18rem 0.15rem 0.1rem;
+    border-radius: 50% 50% 0 0;
+    background-color: var(--white);
+    line-height: 0;
+    // hero arrow position
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+}
+
+@media(min-width:768px) {
+  .hero::after {
+    width: 0.31rem;
+    padding: 0.35rem 0.31rem 0.16rem;
+  }
+}
+
+// header
+.header {
+  // pile
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  // position
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+
+  // side space
+  box-sizing: border-box;
+  padding-left: var(--side);
+  padding-right: var(--side);
+}
+
+.site img {
+  width: 1.25rem;
+}
+
+@media (min-width:768px) {
+  .site img {
+    width: 2.26rem;
+  }
+}
+
+// nav button
+.nav-button {
+  // nav bar view setting
+  box-sizing: content-box;
+  padding: 0;
+  outline: none;
+  border: none;
+  background: none;
+
+  // nav bar → humbergar menu
+  width: 29px;
+  height: 20px;
+  cursor: pointer;
+  color: var(--white);
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background-color: currentColor;
+    transform: translateY(10px);
+    transition: 0.3s ease-in-out;
+  }
+
+  &::before {
+    transform: translateY(-10px);
+    box-shadow: 0 10px currentColor;
+  }
+}
+
+// nav menu overlay stop button
+.open .nav-button {
+  z-index: 1000;
+
+  &::before {
+    transform: rotate(-45deg);
+    box-shadow: none;
+  }
+
+  &::after {
+    transform: rotate(45deg);
+    box-shadow: none;
+  }
+}
+
+
+// nav menu overlay open
+html.open,
+.open body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.open .header {
+  position: relative;
+  margin-bottom: -100px;
+}
+
+.open .nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--white);
+
+  // .nav position
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & ul {
+    margin-bottom: 10vh;
+    list-style: none;
+  }
+
+  & li:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+// nav menu overlay stop
+.nav {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 100%;
+  overflow: hidden;
+  color: transparent;
+  transition: 0.5s ease-in-out;
+}
+
+// nav menu PC version
+@media (min-width: 768px) {
+  .nav-button {
+    display: none;
+  }
+
+  .nav {
+    position: relative;
+    left: auto;
+    width: auto;
+    height: auto;
+  }
+
+  .nav ul {
+    display: flex;
+    list-style: none;
+    color: var(--white);
+  }
+
+  .nav ul li:not(:first-child) {
+    margin-left: 0.55rem;
+  }
+}
+
+// content setting
+
+// container setting = article common setting
+.container {
+  padding: 0.68rem var(--side);
+
+  & h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.26rem;
+    letter-spacing: 0.179em;
+    line-height: 1;
+  }
+
+  &.hours h2 {
+    letter-spacing: 0;
+  }
+
+  &.info h2 img {
+    width: 2.44rem;
+  }
+
+  &.menu h2+p,
+  &.news h2+p,
+  &.hours h2+p {
+    font-size: 0.13rem;
+  }
+
+  &.info h2+p {
+    color: var(--midgray);
+    font-weight: bold;
+    letter-spacing: 0.516em;
+  }
+
+  // article underline setting
+  &.menu h2::after,
+  &.news h2::after,
+  &.hours h2::after {
+    content: '';
+    display: block;
+    width: 0.56rem;
+    height: 4px;
+    margin-top: 0.17rem;
+    margin-bottom: 0.1rem;
+    background-color: var(--primary);
+  }
+
+  &.hours h2::after {
+    width: 0.28rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
+// container PC setting
+@media (min-width: 768px) {
+
+  .container.menu,
+  .container.news {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+// article h2 & p setting
+@media (min-width: 768px) {
+  .container h2 {
+    font-size: 0.42rem;
+  }
+
+  .container.hours h2 {
+    font-size: 0.32rem;
+  }
+
+  .container.menu h2+p,
+  .container.news h2+p,
+  .container.hours h2+p {
+    font-size: 0.2rem;
+  }
+
+  .container.menu h2::after,
+  .container.news h2::after {
+    width: 0.85rem;
+    margin-top: 0.23rem;
+    margin-bottom: 0.14rem;
+  }
+}
+
+
+// food & drink
+
+.item {
+  margin-top: 0.64rem;
+
+  & h3 {
+    margin-bottom: 0.19rem;
+    color: var(--midgray);
+    font-size: 0.16rem;
+    line-height: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &::before {
+      content: url(../img/mark.svg);
+      display: block;
+      width: 0.4rem;
+      margin-right: 0.1rem;
+    }
+
+  }
+
+  & p {
+    margin-bottom: 0.16rem;
+    font-size: 0.14rem;
+  }
+
+  & .text {
+    width: 76vw;
+  }
+
+  &.plate {
+    & .text {
+      margin-left: auto;
+
+    }
+
+    & h3 {
+      flex-direction: row-reverse;
+
+      &::before {
+        margin-left: 0.1rem;
+        margin-right: 0;
+      }
+    }
+  }
+
+  // food & drink position & size
+
+  & .photo {
+    margin: 0 calc(var(--side) * -1);
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &.cafe .fig1 {
+    margin-right: -0.47rem;
+    margin-bottom: 0.38rem;
+  }
+
+  &.cafe .fig2 {
+    flex: 0 0 43vw;
+  }
+
+  &.cafe .fig2 img {
+    height: 1.56rem;
+  }
+
+  &.plate .fig1 {
+    flex: 0 0 85.6vw;
+  }
+
+  &.sweet .fig1 {
+    flex: 1 1 auto;
+    margin-right: -0.26rem;
+    margin-bottom: 0.38rem;
+  }
+
+  &.sweet .fig2 {
+    flex: 0 0 56.2vw;
+  }
+
+  &.sweet img {
+    height: 2rem;
+  }
+
+  & img {
+    width: 100%;
+    max-height: 2rem;
+    object-fit: cover;
+  }
+}
+
+// food & drink PC layout
+@media (min-width: 768px) {
+  .item {
+    margin-top: 1rem;
+  }
+
+  .item h3 {
+    margin-bottom: 0.22rem;
+    font-size: 0.25rem;
+  }
+
+  .item h3::before {
+    width: 0.48rem;
+  }
+
+  .item p {
+    font-size: 0.16rem;
+  }
+
+  // food & drink text & img position
+
+  .item {
+    display: flex;
+  }
+
+  .item .text {
+    flex: 0 0 3.12rem;
+    margin-right: 0.49rem;
+  }
+
+  .item .photo {
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  .item img {
+    max-height: none;
+  }
+
+  // text & img coffee
+  .item.cafe {
+    margin-left: calc(var(--side) * 2);
+    margin-right: calc(var(--side) * -1);
+  }
+
+  .item.cafe .fig1 {
+    margin-right: -0.88rem;
+    margin-bottom: 1.11rem;
+  }
+
+  .item.cafe .fig2 {
+    flex: 0 0 auto;
+    width: calc(var(--side) * 3 + 0.88rem);
+  }
+
+  .item.cafe .fig1 img {
+    height: 3.3rem;
+  }
+
+  .item.cafe .fig2 img {
+    height: 3rem;
+  }
+
+  .item.cafe .text {
+    align-self: flex-end;
+  }
+
+  .item.cafe p {
+    margin-bottom: 0.73rem;
+  }
+
+  .item.cafe h3 {
+    margin-left: -0.58rem;
+  }
+
+  // plate text & img position
+  .item.plate {
+    flex-direction: row-reverse;
+    margin-left: calc(var (--side) * -1);
+    margin-right: calc(var (--side) * -1);
+
+    & .text {
+      margin-right: 0;
+      margin-left: 0.49rem;
+    }
+
+    & .photo {
+      display: block;
+    }
+
+    & .fig1 img {
+      height: 3.95rem;
+    }
+
+    & .h3 {
+      margin-right: -0.58rem;
+    }
+  }
+
+  // sweet text & img position
+  .item.sweet {
+    margin-left: calc(var(--side) * 2);
+    margin-right: calc(var(--side) * -1);
+
+    & .fig1 {
+      margin: 0;
+    }
+
+    & .fig2 {
+      flex: 0 0 4.69rem;
+    }
+
+    & img {
+      height: 3.04rem;
+    }
+
+    & h3 {
+      margin-left: -0.58rem;
+    }
+  }
+
+  // food & drink heart img position
+  .item .text {
+    position: relative;
+    z-index: 2;
+  }
+
+  .item .photo {
+    position: relative;
+  }
+
+  .item.cafe .photo::after {
+    content: url(../img/cafe.svg);
+    display: block;
+    width: 28vw;
+    position: absolute;
+    top: -12vw;
+    right: 12vw;
+    opacity: 0.8;
+  }
+
+
+
+}
+
+
+
+// what's new
+.news {
+  background-image: url(../img/texture.jpg);
+  background-repeat: repeat;
+}
+
+// hours
+.hours {
+  background-image: url(../img/shop.jpg);
+  background-position: center;
+  background-size: cover;
+  color: var(--white);
+  text-align: center;
+}
+
+// coffee source
+.info {
+  background-color: var(--primary);
+  text-align: center;
+}
+
+// footer
+.footer {
+  height: 89px;
+  background-color: var(--darkgray);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
